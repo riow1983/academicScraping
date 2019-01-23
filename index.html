@@ -22,7 +22,6 @@
 
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
-            //src="./jquery/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
 
@@ -36,21 +35,24 @@
                 //encrypted: "ENCRYPTION_OFF",
                 //trust: "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES",
                 container_id: "viz",
-                server_url: "bolt://54.87.210.203:35086",
+                server_url: "bolt://54.234.78.91:32819",
                 server_user: "neo4j",
-                server_password: "pushup-averages-lee",
+                server_password: "conversion-users-armor",
                 arrows: true,
                 labels: {
                     //"Character": "name",
                     "演題": {
                         "caption": "演題テーマ",
-                        "size": 10.0
+                        "size": 500.0
                         //"sizeCypher": "MATCH (n) WHERE id(n) = {id} MATCH (n)-[r]-() RETURN sum(r.weight) AS c"
                     },
-                    "氏名": {
+                    "医師": {
                         "caption": "氏名",
-                        "community": "所属",
-                        "size": 5.0
+                        "size": 100.0
+                    },
+                    "組織": {
+                        "caption": "組織名",
+                        "size": 300.0
                     }
                 },
                 relationships: {
@@ -61,9 +63,13 @@
                     "演者": {
                         "caption": true,
                         "color": "Blue"
+                    },
+                    "所属": {
+                        "caption": true,
+                        "color": "Green"
                     }
                 },
-                initial_cypher: "MATCH n=(:氏名)-[:座長]->(:演題)<-[:演者]-(:氏名) RETURN n"
+                initial_cypher: "MATCH n=(:組織)<-[:所属]-(:医師)-[:座長]->(:演題)<-[:演者]-(:医師)-[:所属]->(:組織) RETURN n"
             };
             viz = new NeoVis.default(config);
             viz.render();
